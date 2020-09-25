@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class ChevronAdjust : MonoBehaviour
 {
+
+
+    public bool bUpdateShutter = true;
+    public bool bUpdateAngle = false;
+
+    public float maxSpeed = 150f;
     /// <summary>
     /// This function is called when the object becomes enabled and active.
     /// </summary>
@@ -28,9 +34,19 @@ public class ChevronAdjust : MonoBehaviour
 
     void UpdateChevron(float speed)
     {
-        //Debug.Log("FixedUpdate kinda sucks");
 
-        float _speed = Mathf.Min(1, speed / 150f);//Roughly remap speed to 0-1 range
-        material.SetFloat("chevron_size", _speed);
+
+        float _speedShutter = Mathf.Min(1, (speed / maxSpeed) + 0.3f);//Roughly remap speed to 0-1 range //and subtract an epsilon to fix FXAA issues
+        float _speedAngle = speed - 80f;
+
+
+        if (bUpdateShutter)
+        {
+            material.SetFloat("chevron_size", _speedShutter);
+        }
+        if (bUpdateAngle)
+        {
+            material.SetFloat("chevron_angle", _speedAngle);
+        }
     }
 }

@@ -22,6 +22,9 @@ public class player_movement : MonoBehaviour
     public delegate void PlayerSpeed(float speed);
     public static event PlayerSpeed OnPlayerSpeedUpdate;
 
+    public delegate void PlayerZPos(float zPos);
+    public static event PlayerZPos OnPlayerZUpdate;
+
 
 
 
@@ -33,12 +36,21 @@ public class player_movement : MonoBehaviour
 
         if (rb.position.y < -2f)
         {//Reset if off the map
+            if (bIsReplaying)
+            {
+                CommandLog.commands.Clear();
+            }
             FindObjectOfType<game_manager>().GameEnd();
         }
 
         if (OnPlayerSpeedUpdate != null)//Prevent an empty list from causing errors
         {
             OnPlayerSpeedUpdate(rb.velocity.z);
+        }
+
+        if (OnPlayerZUpdate != null)//Prevent an empty list from causing errors
+        {
+            OnPlayerZUpdate(transform.position.z);
         }
 
         if (bIsReplaying)

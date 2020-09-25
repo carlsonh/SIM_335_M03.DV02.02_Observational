@@ -27,7 +27,7 @@ public sealed class CommandLogUI : MonoBehaviour
 
     public void UpdateCommandLogDisplay(string command)
     {
-        commandLogDisplay.text += "\n" + command;
+        //commandLogDisplay.text += "\n" + command;
     }
 
 }
