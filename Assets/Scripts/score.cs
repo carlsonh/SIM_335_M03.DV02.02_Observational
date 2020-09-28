@@ -5,11 +5,21 @@ using UnityEngine.UI;
 
 public class score : MonoBehaviour
 {
-	public Transform player;
-	public Text scoreText;
+    public Text scoreText;
 
-    void Update()
+
+    private void OnEnable()
     {
-       scoreText.text = player.position.z.ToString("0");
+        player_movement.OnPlayerZUpdate += UpdateScore;
+    }
+
+    private void OnDisable()
+    {
+        player_movement.OnPlayerZUpdate -= UpdateScore;
+    }
+
+    void UpdateScore(float zPos)
+    {
+        scoreText.text = zPos.ToString("0");
     }
 }
